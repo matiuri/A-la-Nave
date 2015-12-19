@@ -1,6 +1,6 @@
 ## General
 lib
-*.log
+*.l
 Untracked/
 
 ## Java
