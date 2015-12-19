@@ -1,5 +1,7 @@
 ## General
-lib/
+lib
+*.log
+Untracked/
 
 ## Java
 *.class
