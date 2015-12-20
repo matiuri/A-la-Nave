@@ -8,6 +8,7 @@ import mati.advancedgdx.screens.Screen
 import mati.nave.Game
 import mati.nave.input.PlayerInputDesktop
 import mati.nave.land.Land
+import mati.nave.land.objects.Food
 import mati.nave.land.objects.Ship
 import mati.nave.land.tiles.Path
 import mati.nave.land.tiles.Wall
@@ -24,20 +25,21 @@ class GameScreen(game: Game) : Screen(game) {
             Path.init(game)
             Wall.init(game)
             Ship.init(game)
+            Food.init(game)
             Player.init(game)
         }
     }
 
     override fun show() {
         stage = Stage(ExtendViewport(800f, 480f))
-        val tiles: Array<Array<out Land>> = LevelGenerator.generate(LevelMaps.t0)
+        val tiles: Array<Array<out Land>> = LevelGenerator.generate(LevelMaps.t1)
         tiles.forEach {
             it.forEach {
                 if (it is Actor)
                     stage.addActor(it)
             }
         }
-        val objects: Array<Array<out Land>> = LevelGenerator.generate(LevelMaps.o0)
+        val objects: Array<Array<out Land>> = LevelGenerator.generate(LevelMaps.o1)
         objects.forEach {
             it.forEach {
                 if (it is Actor)
@@ -52,6 +54,7 @@ class GameScreen(game: Game) : Screen(game) {
         player.yI = 1
         stage.addActor(player)
         stage.keyboardFocus = player
+        Food.player = player
 
         Gdx.input.inputProcessor = stage
     }

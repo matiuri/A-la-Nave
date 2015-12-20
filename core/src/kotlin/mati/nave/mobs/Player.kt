@@ -7,19 +7,25 @@ import mati.nave.Game
 import mati.nave.land.Land
 import mati.nave.land.objects.LObject
 import mati.nave.land.tiles.Tile
+import mati.advancedgdx.AdvancedGame.Static.log
 import kotlin.properties.Delegates
 
 class Player(private val tiles: Array<Array<out Land>>, private val objects: Array<Array<out Land>>) : Actor() {
     companion object Static {
         private var tex: Texture by Delegates.notNull<Texture>()
+        private var game: Game by Delegates.notNull<Game>()
 
         fun init(game: Game) {
             tex = game.astManager["Player", Texture::class]
+            this.game = game
         }
     }
 
-    var xI = 0
-    var yI = 0
+    val maxMoves: Int = 7
+    var moves: Int = maxMoves
+
+    var xI: Int = 0
+    var yI: Int = 0
     var xMov: Int = 0
     var yMov: Int = 0
 
@@ -28,40 +34,52 @@ class Player(private val tiles: Array<Array<out Land>>, private val objects: Arr
     }
 
     override fun act(delta: Float) {
-        if (xMov < 0) {
-            val tile = tiles[xI - 1][yI]
-            if (tile is Tile && !tile.isCollisionable()) {
-                xI--
-                x = (tile as Actor).x
-                (objects[xI][yI] as LObject).perform()
+        if (moves > 0) {
+            if (xMov < 0) {
+                val tile = tiles[xI - 1][yI]
+                if (tile is Tile && !tile.isCollisionable()) {
+                    xI--
+                    x = (tile as Actor).x
+                    reduce()
+                    (objects[xI][yI] as LObject).perform()
+                }
+                xMov = 0
+            } else if (xMov > 0) {
+                val tile = tiles[xI + 1][yI]
+                if (tile is Tile && !tile.isCollisionable()) {
+                    xI++
+                    x = (tile as Actor).x
+                    reduce()
+                    (objects[xI][yI] as LObject).perform()
+                }
+                xMov = 0
             }
-            xMov = 0
-        } else if (xMov > 0) {
-            val tile = tiles[xI + 1][yI]
-            if (tile is Tile && !tile.isCollisionable()) {
-                xI++
-                x = (tile as Actor).x
-                (objects[xI][yI] as LObject).perform()
-            }
-            xMov = 0
-        }
 
-        if (yMov < 0) {
-            val tile = tiles[xI][yI - 1]
-            if (tile is Tile && !tile.isCollisionable()) {
-                yI--
-                y = (tile as Actor).y
-                (objects[xI][yI] as LObject).perform()
+            if (yMov < 0) {
+                val tile = tiles[xI][yI - 1]
+                if (tile is Tile && !tile.isCollisionable()) {
+                    yI--
+                    y = (tile as Actor).y
+                    reduce()
+                    (objects[xI][yI] as LObject).perform()
+                }
+                yMov = 0
+            } else if (yMov > 0) {
+                val tile = tiles[xI][yI + 1]
+                if (tile is Tile && !tile.isCollisionable()) {
+                    yI++
+                    y = (tile as Actor).y
+                    reduce()
+                    (objects[xI][yI] as LObject).perform()
+                }
+                yMov = 0
             }
-            yMov = 0
-        } else if (yMov > 0) {
-            val tile = tiles[xI][yI + 1]
-            if (tile is Tile && !tile.isCollisionable()) {
-                yI++
-                y = (tile as Actor).y
-                (objects[xI][yI] as LObject).perform()
-            }
-            yMov = 0
-        }
+        } else if (xMov != 0 || yMov != 0)
+            game.scrManager.change("Title")
+    }
+
+    private fun reduce() {
+        moves--
+        log.d("${this.javaClass.simpleName}", "Moves left: $moves")
     }
 }
