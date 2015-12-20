@@ -42,7 +42,7 @@ class TitleScreen(game: Game) : Screen(game) {
         //TODO: Use locales
         val play: TextButton = createButton("Play", font, up, down)
         play.addListener1 { e, a ->
-            log.e("${this.javaClass.simpleName}", "Not Yet Implemented")
+            game.scrManager.change("Game")
         }
         table.add(play).expandX().fill().pad(5f)
 

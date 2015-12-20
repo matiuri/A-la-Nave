@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import mati.advancedgdx.AdvancedGame
 import mati.advancedgdx.assets.FontLoader.FontLoaderParameter
+import mati.nave.screens.GameScreen
 import mati.nave.screens.TitleScreen
 import kotlin.properties.Delegates
 
@@ -23,9 +24,11 @@ class Game() : AdvancedGame() {
                     it.borderColor = Color.BLACK
                     it.borderWidth = 2.5f
                     it.size = 64
-                }).load {
-            scrManager.add("Title", TitleScreen(this)).load("Title").change("Title")
-        }
+                }).queue("Path", "tiles/Path.png", Texture::class).queue("Wall", "tiles/Wall.png", Texture::class)
+                .load {
+                    scrManager.add("Title", TitleScreen(this)).load("Title").add("Game", GameScreen(this)).load("Game")
+                            .change("Title")
+                }
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f)
     }
 
