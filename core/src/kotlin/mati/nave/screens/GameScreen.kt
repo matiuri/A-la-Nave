@@ -2,6 +2,7 @@ package mati.nave.screens
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mati.advancedgdx.screens.Screen
 import mati.nave.Game
@@ -23,8 +24,8 @@ class GameScreen(game: Game) : Screen(game) {
     }
 
     override fun show() {
-        stage = Stage(ScreenViewport())
-        val tiles: Array<Array<Tile>> = LevelGenerator.generate(LevelMaps.l1)
+        stage = Stage(ExtendViewport(800f, 480f))
+        val tiles: Array<Array<Tile>> = LevelGenerator.generate(LevelMaps.l0)
         tiles.forEach {
             it.forEach {
                 if (it is Actor)
