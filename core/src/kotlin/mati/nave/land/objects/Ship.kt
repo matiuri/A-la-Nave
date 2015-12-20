@@ -9,9 +9,11 @@ import kotlin.properties.Delegates
 class Ship() : Actor(), LObject {
     companion object Static {
         private var tex: Texture by Delegates.notNull<Texture>()
+        private var game: Game by Delegates.notNull<Game>()
 
         fun init(game: Game) {
             tex = game.astManager["Ship", Texture::class]
+            this.game = game
         }
     }
 
@@ -24,6 +26,16 @@ class Ship() : Actor(), LObject {
     }
 
     override fun perform() {
-        //TODO
+        game.scrManager.change("Title")
+    }
+
+    class ShipC() : LObject {
+        override fun perform() {
+            game.scrManager.change("Title")
+        }
+
+        override fun setBounds(x: Float, y: Float, width: Float, height: Float) {
+        }
+
     }
 }

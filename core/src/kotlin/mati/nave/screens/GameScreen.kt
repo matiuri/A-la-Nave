@@ -45,9 +45,11 @@ class GameScreen(game: Game) : Screen(game) {
             }
         }
 
-        val player: Player = Player()
+        val player: Player = Player(tiles, objects)
         player.addListener(PlayerInputDesktop(player))
         player.setBounds(25f, 25f, 25f, 25f)
+        player.xI = 1
+        player.yI = 1
         stage.addActor(player)
         stage.keyboardFocus = player
 

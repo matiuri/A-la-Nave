@@ -2,6 +2,7 @@ package mati.nave.levels;
 
 import mati.nave.land.objects.None;
 import mati.nave.land.objects.Ship;
+import mati.nave.land.objects.Ship.ShipC;
 import mati.nave.land.tiles.Path;
 import mati.nave.land.tiles.Wall;
 
@@ -11,6 +12,7 @@ public class LevelMaps {
 
 	private static Class<Ship> s = Ship.class;
 	private static Class<None> n = None.class;
+	private static Class<ShipC> c = ShipC.class;
 
 	// @formatter:off
 	public static Class[][] t0 = {
@@ -51,9 +53,9 @@ public class LevelMaps {
 			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n},
 			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n},
 			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n},
-			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,s,n,n,n},
-			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n},
-			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n},
+			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,s,c,c,n},
+			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,c,c,c,n},
+			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,c,c,c,n},
 			{n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n}
 	};
     // @formatter:on
