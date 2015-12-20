@@ -25,6 +25,7 @@ class Game() : AdvancedGame() {
                     it.borderWidth = 2.5f
                     it.size = 64
                 }).queue("Path", "tiles/Path.png", Texture::class).queue("Wall", "tiles/Wall.png", Texture::class)
+                .queue("Ship", "tiles/Ship.png", Texture::class).queue("Player", "mobs/Player.png", Texture::class)
                 .load {
                     scrManager.add("Title", TitleScreen(this)).load("Title").add("Game", GameScreen(this)).load("Game")
                             .change("Title")
