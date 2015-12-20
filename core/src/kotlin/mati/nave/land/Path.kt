@@ -8,15 +8,20 @@ import kotlin.properties.Delegates
 
 class Path() : Actor(), Tile {
     companion object Static {
-        private var tex: Texture by Delegates.notNull<Texture>()
 
+        private var tex: Texture by Delegates.notNull<Texture>()
         fun init(game: Game) {
             tex = game.astManager["Path", Texture::class]
         }
+
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         batch?.draw(tex, x, y, width, height)
+    }
+
+    override fun setBounds(x: Float, y: Float, width: Float, height: Float) {
+        super.setBounds(x, y, width, height)
     }
 
     override fun isCollisionable(): Boolean = false

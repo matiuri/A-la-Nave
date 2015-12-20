@@ -19,6 +19,10 @@ class Wall() : Actor(), Tile {
         batch?.draw(tex, x, y, width, height)
     }
 
+    override fun setBounds(x: Float, y: Float, width: Float, height: Float) {
+        super.setBounds(x, y, width, height)
+    }
+
     override fun isCollisionable(): Boolean = true
 
     override fun doesHurt(): Boolean = false
