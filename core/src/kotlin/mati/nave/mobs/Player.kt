@@ -2,15 +2,14 @@ package mati.nave.mobs
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.maps.objects.RectangleMapObject
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Actor
 import mati.nave.Game
-import mati.nave.land.Land
-import mati.nave.land.objects.LObject
-import mati.nave.land.tiles.Tile
-import mati.advancedgdx.AdvancedGame.Static.log
 import kotlin.properties.Delegates
 
-class Player(private val tiles: Array<Array<out Land>>, private val objects: Array<Array<out Land>>) : Actor() {
+class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>) : Actor() {
     companion object Static {
         private var tex: Texture by Delegates.notNull<Texture>()
         private var game: Game by Delegates.notNull<Game>()
@@ -21,7 +20,10 @@ class Player(private val tiles: Array<Array<out Land>>, private val objects: Arr
         }
     }
 
-    val maxMoves: Int = 7
+    val bb: Rectangle = Rectangle(x, y, width, height)
+    //val sr: ShapeRenderer = ShapeRenderer()
+
+    val maxMoves: Int = 6
     var moves: Int = maxMoves
 
     var xI: Int = 0
@@ -31,55 +33,73 @@ class Player(private val tiles: Array<Array<out Land>>, private val objects: Arr
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         batch?.draw(tex, x, y, width, height)
+        batch?.end()
+        //sr.begin(ShapeRenderer.ShapeType.Line)
+        //sr.rect(bb.x, bb.y, bb.width, bb.height)
+        //sr.end()
+        batch?.begin()
     }
 
     override fun act(delta: Float) {
         if (moves > 0) {
-            if (xMov < 0) {
-                val tile = tiles[xI - 1][yI]
-                if (tile is Tile && !tile.isCollisionable()) {
-                    xI--
-                    x = (tile as Actor).x
-                    reduce()
-                    (objects[xI][yI] as LObject).perform()
-                }
+            if (xMov > 0) {
                 xMov = 0
-            } else if (xMov > 0) {
-                val tile = tiles[xI + 1][yI]
-                if (tile is Tile && !tile.isCollisionable()) {
-                    xI++
-                    x = (tile as Actor).x
-                    reduce()
-                    (objects[xI][yI] as LObject).perform()
+                yMov = 0
+                bb.set(x + 32, y, width, height)
+                walls.forEach {
+                    if (bb.overlaps(it.rectangle)) {
+                        bb.set(x, y, width, height)
+                        return
+                    }
                 }
+                x += 32
+                reduce()
+            } else if (xMov < 0) {
                 xMov = 0
+                yMov = 0
+                bb.set(x - 32, y, width, height)
+                walls.forEach {
+                    if (bb.overlaps(it.rectangle)) {
+                        bb.set(x, y, width, height)
+                        return
+                    }
+                }
+                x -= 32
+                reduce()
             }
 
-            if (yMov < 0) {
-                val tile = tiles[xI][yI - 1]
-                if (tile is Tile && !tile.isCollisionable()) {
-                    yI--
-                    y = (tile as Actor).y
-                    reduce()
-                    (objects[xI][yI] as LObject).perform()
-                }
+            if (yMov > 0) {
+                xMov = 0
                 yMov = 0
-            } else if (yMov > 0) {
-                val tile = tiles[xI][yI + 1]
-                if (tile is Tile && !tile.isCollisionable()) {
-                    yI++
-                    y = (tile as Actor).y
-                    reduce()
-                    (objects[xI][yI] as LObject).perform()
+                bb.set(x, y + 32, width, height)
+                walls.forEach {
+                    if (bb.overlaps(it.rectangle)) {
+                        bb.set(x, y, width, height)
+                        return
+                    }
                 }
+                y += 32
+                reduce()
+            } else if (yMov < 0) {
+                xMov = 0
                 yMov = 0
+                bb.set(x, y - 32, width, height)
+                walls.forEach {
+                    if (bb.overlaps(it.rectangle)) {
+                        bb.set(x, y, width, height)
+                        return
+                    }
+                }
+                y -= 32
+                reduce()
             }
-        } else if (xMov != 0 || yMov != 0)
-            game.scrManager.change("Title")
+        } else if (xMov != 0 || yMov != 0) {
+            game.scrManager.change("Title") //TODO: Game Over
+        }
     }
 
     private fun reduce() {
-        moves--
-        log.d("${this.javaClass.simpleName}", "Moves left: $moves")
+        //moves--
+        //log.d("${this.javaClass.simpleName}", "Moves left: $moves")
     }
 }
