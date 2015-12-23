@@ -3,9 +3,15 @@
  <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32">
   <image source="../tiles/Tiles.png" width="128" height="128"/>
  </tileset>
+ <tileset firstgid="17" name="Tiles2" tilewidth="32" tileheight="32">
+  <image source="../tiles/Tiles2.PNG" width="768" height="416"/>
+  <terraintypes>
+   <terrain name="" tile="-1"/>
+  </terraintypes>
+ </tileset>
  <layer name="Tiles" width="25" height="15">
   <data encoding="base64" compression="zlib">
-   eJzjZWBg4KUD5qMhRraDVm4eyv7AZu5Q9ge90xUt3T4aHyM3PmiNAfaPE7c=
+   eJyzZGBgsMKBrQlgGyKwLRAHArE3DXEokh1bgXgbEXg7AbwDjx20wrlk+IMYvyD7B9kOWvojkwx/EOunHWh20Nof5PoBn19g8dFKB38g20Gr+ADZ0UgHfzRSGB+E8ge9/DETiGcRwLOJwHNw4LlADAAFDq0/
   </data>
  </layer>
  <objectgroup name="Objects" width="25" height="15">

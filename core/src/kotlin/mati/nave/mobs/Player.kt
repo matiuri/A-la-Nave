@@ -7,9 +7,8 @@ import com.badlogic.gdx.maps.objects.TextureMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.Stage
-import mati.nave.Game
 import mati.advancedgdx.AdvancedGame.Static.log
+import mati.nave.Game
 import mati.nave.land.objects.Food
 import kotlin.properties.Delegates
 
