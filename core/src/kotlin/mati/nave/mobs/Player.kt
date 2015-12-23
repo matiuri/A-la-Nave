@@ -11,7 +11,8 @@ import mati.advancedgdx.AdvancedGame.Static.log
 import mati.advancedgdx.graphics.Animation
 import mati.advancedgdx.utils.split
 import mati.nave.Game
-import mati.nave.land.objects.Food
+import mati.nave.gui.PlayerEnergyDisplay
+import mati.nave.objects.Food
 import kotlin.properties.Delegates
 
 class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>, private val ship: Array<Rectangle>,
@@ -36,6 +37,8 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
     var yI: Int = 0
     var xMov: Int = 0
     var yMov: Int = 0
+
+    var display: PlayerEnergyDisplay? = null
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         batch?.draw(animation.get(), x, y, width, height)
@@ -97,6 +100,7 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
                 if (bb.overlaps(Rectangle(it.x, it.y, it.textureRegion.regionWidth.toFloat(),
                         it.textureRegion.regionHeight.toFloat()))) {
                     moves = maxMoves
+                    display?.recoverAll()
                     map.layers["Objects"].objects.remove(it)
                     foods[it]?.remove()
                 }
@@ -107,6 +111,7 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
 
     private fun reduce() {
         moves--
+        display?.decrease()
         log.d("${this.javaClass.simpleName}", "Moves left: $moves")
     }
 }

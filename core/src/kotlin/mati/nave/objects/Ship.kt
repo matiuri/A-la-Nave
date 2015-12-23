@@ -1,4 +1,4 @@
-package mati.nave.land.objects
+package mati.nave.objects
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion

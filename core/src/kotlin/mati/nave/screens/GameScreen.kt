@@ -13,16 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import mati.advancedgdx.screens.Screen
 import mati.nave.Game
+import mati.nave.gui.PlayerEnergyDisplay
 import mati.nave.input.PlayerInputDesktop
-import mati.nave.land.objects.Food
-import mati.nave.land.objects.Ship
-import mati.nave.land.tiles.Path
-import mati.nave.land.tiles.Wall
 import mati.nave.mobs.Player
+import mati.nave.objects.Food
+import mati.nave.objects.Ship
 import java.util.*
 import kotlin.properties.Delegates
 
 class GameScreen(game: Game) : Screen(game) {
+    var levelPath: String = "levels/l0.tmx"
+
     private var stage: Stage by Delegates.notNull<Stage>()
 
     //TODO: Move this to another class
@@ -31,15 +32,15 @@ class GameScreen(game: Game) : Screen(game) {
 
     override fun load() {
         if (game is Game) {
-            Path.init(game)
-            Wall.init(game)
             Player.init(game)
+            PlayerEnergyDisplay.init(game)
         }
-        map = TmxMapLoader().load("levels/l0.tmx")
-        renderer = OrthogonalTiledMapRenderer(map, 1f)
     }
 
     override fun show() {
+        map = TmxMapLoader().load(levelPath)
+        renderer = OrthogonalTiledMapRenderer(map, 1f)
+
         val cam: OrthographicCamera = OrthographicCamera()
         stage = Stage(FitViewport(800f, 480f, cam))
         renderer.setView(cam)
@@ -73,6 +74,11 @@ class GameScreen(game: Game) : Screen(game) {
         stage.addActor(player)
         stage.keyboardFocus = player
 
+        val energies: PlayerEnergyDisplay = PlayerEnergyDisplay(player)
+        energies.setPosition(10f, stage.height - 30)
+        player.display = energies
+        stage.addActor(energies)
+
         Gdx.input.inputProcessor = stage
     }
 
@@ -85,9 +91,6 @@ class GameScreen(game: Game) : Screen(game) {
 
     override fun hide() {
         stage.dispose()
-    }
-
-    override fun dispose() {
         map.dispose()
     }
 }

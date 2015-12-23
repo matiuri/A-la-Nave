@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mati.advancedgdx.screens.Screen
-import mati.advancedgdx.AdvancedGame.Static.log
 import mati.advancedgdx.utils.addListener1
 import mati.advancedgdx.utils.createButton
 import mati.advancedgdx.utils.createLabel
@@ -18,7 +17,7 @@ import mati.advancedgdx.utils.createNPD
 import mati.nave.Game
 import kotlin.properties.Delegates
 
-class TitleScreen(game: Game) : Screen(game) {
+class LevelSelectScreen(game: Game) : Screen(game) {
     private var stage: Stage by Delegates.notNull<Stage>()
     private var up: NinePatchDrawable by Delegates.notNull<NinePatchDrawable>()
     private var down: NinePatchDrawable by Delegates.notNull<NinePatchDrawable>()
@@ -36,21 +35,18 @@ class TitleScreen(game: Game) : Screen(game) {
         table.pad(10f)
 
         val font = game.astManager["UbuntuR-64", BitmapFont::class]
-        table.add(createLabel("A la Nave", font, Color.GOLD)).colspan(2).expandX().pad(5f)
+        table.add(createLabel("Level Select", font, Color.GOLD)).colspan(2).expandX().pad(5f)
         table.row()
 
-        //TODO: Use locales
-        val play: TextButton = createButton("Play", font, up, down)
-        play.addListener1 { e, a ->
-            game.scrManager.change("LevelSelect")
+        val levels: Int = 2
+        for (i in 0..(levels - 1)) {
+            val play: TextButton = createButton("Level $i", font, up, down)
+            play.addListener1 { e, a ->
+                (game.scrManager["Game"] as GameScreen).levelPath = "levels/l$i.tmx"
+                game.scrManager.change("Game")
+            }
+            table.add(play).expandX().fill().pad(5f)
         }
-        table.add(play).expandX().fill().pad(5f)
-
-        val exit: TextButton = createButton("Exit", font, up, down)
-        exit.addListener1 { e, a ->
-            Gdx.app.exit()
-        }
-        table.add(exit).expandX().fill().pad(5f)
 
         Gdx.input.inputProcessor = stage
     }
