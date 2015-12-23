@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Actor
 import mati.advancedgdx.AdvancedGame.Static.log
+import mati.advancedgdx.graphics.Animation
+import mati.advancedgdx.utils.split
 import mati.nave.Game
 import mati.nave.land.objects.Food
 import kotlin.properties.Delegates
@@ -15,11 +17,12 @@ import kotlin.properties.Delegates
 class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>, private val ship: Array<Rectangle>,
              private val map: TiledMap, private val foods: MutableMap<TextureMapObject, Food>) : Actor() {
     companion object Static {
-        private var tex: Texture by Delegates.notNull<Texture>()
         private var game: Game by Delegates.notNull<Game>()
+        private var animation: Animation by Delegates.notNull<Animation>()
 
         fun init(game: Game) {
-            tex = game.astManager["Player", Texture::class]
+            val tex: Texture = game.astManager["Player", Texture::class]
+            animation = Animation(tex.split(29), 0.15f, true)
             this.game = game
         }
     }
@@ -35,10 +38,11 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
     var yMov: Int = 0
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
-        batch?.draw(tex, x, y, width, height)
+        batch?.draw(animation.get(), x, y, width, height)
     }
 
     override fun act(delta: Float) {
+        animation.update(delta)
         if (moves > 0) {
             if (xMov > 0) {
                 xMov = 0

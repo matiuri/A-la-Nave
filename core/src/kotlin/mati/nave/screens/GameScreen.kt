@@ -49,7 +49,7 @@ class GameScreen(game: Game) : Screen(game) {
         val foods: MutableMap<TextureMapObject, Food> = HashMap()
         map.layers["Objects"].objects.getByType(TextureMapObject::class.java).forEach {
             if (it.properties["name", String::class.java].equals("food")) {
-                val food: Food = Food(it.textureRegion)
+                val food: Food = Food(game as Game)
                 food.setBounds(it.x, it.y, 32f, 32f)
                 stage.addActor(food)
                 foods.put(it, food)
