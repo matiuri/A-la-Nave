@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import mati.advancedgdx.screens.Screen
@@ -17,6 +18,8 @@ import mati.nave.gui.PlayerEnergyDisplay
 import mati.nave.input.PlayerInputDesktop
 import mati.nave.mobs.Player
 import mati.nave.objects.Food
+import mati.nave.objects.Key
+import mati.nave.objects.Lock
 import mati.nave.objects.Ship
 import java.util.*
 import kotlin.properties.Delegates
@@ -34,6 +37,8 @@ class GameScreen(game: Game) : Screen(game) {
         if (game is Game) {
             Player.init(game)
             PlayerEnergyDisplay.init(game)
+            Lock.init(game)
+            Key.init(game)
         }
     }
 
@@ -47,18 +52,28 @@ class GameScreen(game: Game) : Screen(game) {
 
         val ships: Array<Rectangle?> = arrayOfNulls(9) // It's 9 because the ship is 3x3
         var index: Int = 0
-        val foods: MutableMap<TextureMapObject, Food> = HashMap()
+        val pairs: MutableMap<TextureMapObject, Actor> = HashMap()
         map.layers["Objects"].objects.getByType(TextureMapObject::class.java).forEach {
             if (it.properties["name", String::class.java].equals("food")) {
                 val food: Food = Food(game as Game)
                 food.setBounds(it.x, it.y, 32f, 32f)
                 stage.addActor(food)
-                foods.put(it, food)
+                pairs.put(it, food)
             } else if (it.properties["name", String::class.java].equals("ship")) {
                 val ship: Ship = Ship(it.textureRegion)
                 ship.setBounds(it.x, it.y, 32f, 32f)
                 ships[index++] = ship.bb
                 stage.addActor(ship)
+            } else if (it.properties["name", String::class.java].equals("lock")) {
+                val lock: Lock = Lock(it.properties["pair", String::class.java].toInt())
+                lock.setBounds(it.x, it.y, 32f, 32f)
+                stage.addActor(lock)
+                pairs.put(it, lock)
+            } else if (it.properties["name", String::class.java].equals("key")) {
+                val key: Key = Key(it.properties["pair", String::class.java].toInt())
+                key.setBounds(it.x, it.y, 32f, 32f)
+                stage.addActor(key)
+                pairs.put(it, key)
             }
         }
 
@@ -66,7 +81,7 @@ class GameScreen(game: Game) : Screen(game) {
             ships[it]!!
         }
         val player: Player = Player(map.layers["Objects"].objects.getByType(RectangleMapObject::class.java), shipsNN,
-                map, foods)
+                map, pairs)
         player.addListener(PlayerInputDesktop(player))
         player.setBounds(32f, 32f, 32f, 32f)
         player.xI = 1

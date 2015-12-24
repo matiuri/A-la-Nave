@@ -31,7 +31,8 @@ class Game() : AdvancedGame() {
                 .queue("Lemon", "tiles/Lemon.png", Texture::class).queue("Orange", "tiles/Orange.png", Texture::class)
                 .queue("Watermelon", "tiles/Watermelon.png", Texture::class)
                 .queue("EnergyF", "GUI/EnergyFull.png", Texture::class)
-                .queue("EnergyE", "GUI/EnergyEmpty.png", Texture::class)
+                .queue("EnergyE", "GUI/EnergyEmpty.png", Texture::class).queue("Key", "tiles/Key.png", Texture::class)
+                .queue("Lock", "tiles/Lock.png", Texture::class)
                 .load {
                     scrManager.add("Title", TitleScreen(this)).load("Title").add("LevelSelect", LevelSelectScreen(this))
                             .load("LevelSelect").add("Game", GameScreen(this)).load("Game").change("Title")

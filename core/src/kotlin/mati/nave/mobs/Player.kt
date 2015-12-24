@@ -12,11 +12,12 @@ import mati.advancedgdx.graphics.Animation
 import mati.advancedgdx.utils.split
 import mati.nave.Game
 import mati.nave.gui.PlayerEnergyDisplay
-import mati.nave.objects.Food
+import mati.nave.objects.Key
+import mati.nave.objects.Lock
 import kotlin.properties.Delegates
 
 class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>, private val ship: Array<Rectangle>,
-             private val map: TiledMap, private val foods: MutableMap<TextureMapObject, Food>) : Actor() {
+             private val map: TiledMap, private val pairs: MutableMap<TextureMapObject, Actor>) : Actor() {
     companion object Static {
         private var game: Game by Delegates.notNull<Game>()
         private var animation: Animation by Delegates.notNull<Animation>()
@@ -102,7 +103,26 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
                     moves = maxMoves
                     display?.recoverAll()
                     map.layers["Objects"].objects.remove(it)
-                    foods[it]?.remove()
+                    pairs[it]?.remove()
+                }
+            } else if (it.properties["name", String::class.java].equals("lock")) {
+                if (bb.overlaps((pairs[it] as Lock).bb)) {
+                    bb.set(x, y, width, height)
+                    return true
+                }
+            } else if (it.properties["name", String::class.java].equals("key")) {
+                if (bb.overlaps((pairs[it] as Key).bb)) {
+                    val id: String = it.properties["pair", String::class.java]
+                    map.layers["Objects"].objects.getByType(TextureMapObject::class.java).forEach locks@ { lock ->
+                        if (lock.properties["name", String::class.java].equals("lock") &&
+                                lock.properties["pair", String::class.java].equals(id)) {
+                            map.layers["Objects"].objects.remove(lock)
+                            pairs[lock]?.remove()
+                            map.layers["Objects"].objects.remove(it)
+                            pairs[it]?.remove()
+                            return@locks
+                        }
+                    }
                 }
             }
         }
