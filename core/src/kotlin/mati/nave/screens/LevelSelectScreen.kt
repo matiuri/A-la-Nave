@@ -7,18 +7,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mati.advancedgdx.screens.Screen
-import mati.advancedgdx.utils.addListener1
-import mati.advancedgdx.utils.createButton
 import mati.advancedgdx.utils.createLabel
 import mati.advancedgdx.utils.createNPD
 import mati.nave.Game
 import mati.nave.gui.PlanetButton
 import mati.nave.input.PlanetButtonInput
+import mati.nave.mobs.Enemy
 import kotlin.properties.Delegates
 
 class LevelSelectScreen(game: Game) : Screen(game) {
@@ -43,6 +40,11 @@ class LevelSelectScreen(game: Game) : Screen(game) {
             val planet: PlanetButton = PlanetButton(game as Game, i, Color(MathUtils.random(), MathUtils.random(),
                     MathUtils.random(), 1f)) {
                 (game.scrManager["Game"] as GameScreen).levelPath = "levels/l$i.tmx"
+                if (i == 1) {
+                    val enemy: Enemy = Enemy(false, 8 * 32f, 1, 0.5f)
+                    enemy.setBounds(15 * 32f, 8 * 32f, 32f, 32f)
+                    (game.scrManager["Game"] as GameScreen).enemies = arrayOf(enemy)
+                } else (game.scrManager["Game"] as GameScreen).enemies = null
                 game.scrManager.change("Game")
             }
             planet.setBounds(256f * i, stage.height / 2 - 128, 256f, 256f)

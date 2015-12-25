@@ -29,7 +29,8 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
         }
     }
 
-    val bb: Rectangle = Rectangle(x, y, width, height)
+    var enemies: Array<Enemy>? = null
+    val bb: Rectangle = Rectangle()
 
     val maxMoves: Int = 6
     var moves: Int = maxMoves
@@ -126,6 +127,13 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
                 }
             }
         }
+        if (enemies != null) {
+            for (e in enemies!!) {
+                if (bb.overlaps(e.bb)) {
+                    game.scrManager.change("Title") //TODO: Game Over
+                }
+            }
+        }
         return false
     }
 
@@ -133,5 +141,10 @@ class Player(private val walls: com.badlogic.gdx.utils.Array<RectangleMapObject>
         moves--
         display?.decrease()
         log.d("${this.javaClass.simpleName}", "Moves left: $moves")
+    }
+
+    override fun setBounds(x: Float, y: Float, width: Float, height: Float) {
+        super.setBounds(x, y, width, height)
+        bb.set(x, y, width, height)
     }
 }

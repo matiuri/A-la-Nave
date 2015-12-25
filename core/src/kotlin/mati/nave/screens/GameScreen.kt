@@ -16,6 +16,7 @@ import mati.advancedgdx.screens.Screen
 import mati.nave.Game
 import mati.nave.gui.PlayerEnergyDisplay
 import mati.nave.input.PlayerInputDesktop
+import mati.nave.mobs.Enemy
 import mati.nave.mobs.Player
 import mati.nave.objects.Food
 import mati.nave.objects.Key
@@ -25,6 +26,7 @@ import java.util.*
 import kotlin.properties.Delegates
 
 class GameScreen(game: Game) : Screen(game) {
+    var enemies: Array<Enemy>? = null
     var levelPath: String = "levels/l0.tmx"
 
     private var stage: Stage by Delegates.notNull<Stage>()
@@ -32,6 +34,7 @@ class GameScreen(game: Game) : Screen(game) {
     //TODO: Move this to another class
     private var map: TiledMap by Delegates.notNull<TiledMap>()
     private var renderer: TiledMapRenderer by Delegates.notNull<TiledMapRenderer>()
+    private var player: Player by Delegates.notNull<Player>()
 
     override fun load() {
         if (game is Game) {
@@ -39,6 +42,7 @@ class GameScreen(game: Game) : Screen(game) {
             PlayerEnergyDisplay.init(game)
             Lock.init(game)
             Key.init(game)
+            Enemy.init(game)
         }
     }
 
@@ -80,14 +84,21 @@ class GameScreen(game: Game) : Screen(game) {
         val shipsNN: Array<Rectangle> = Array(ships.size) {
             ships[it]!!
         }
-        val player: Player = Player(map.layers["Objects"].objects.getByType(RectangleMapObject::class.java), shipsNN,
-                map, pairs)
+        player = Player(map.layers["Objects"].objects.getByType(RectangleMapObject::class.java), shipsNN, map, pairs)
         player.addListener(PlayerInputDesktop(player))
         player.setBounds(32f, 32f, 32f, 32f)
         player.xI = 1
         player.yI = 1
         stage.addActor(player)
         stage.keyboardFocus = player
+
+        if (enemies != null) {
+            Enemy.player = player
+            player.enemies = enemies
+            for (e in enemies!!) {
+                stage.addActor(e)
+            }
+        }
 
         val energies: PlayerEnergyDisplay = PlayerEnergyDisplay(player)
         energies.setPosition(10f, stage.height - 30)
@@ -107,5 +118,7 @@ class GameScreen(game: Game) : Screen(game) {
     override fun hide() {
         stage.dispose()
         map.dispose()
+        player.enemies = null
+        enemies = null
     }
 }
