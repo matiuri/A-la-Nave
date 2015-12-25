@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32">
+  <image source="../tiles/Tiles.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="Tiles2" tilewidth="32" tileheight="32">
+  <image source="../tiles/Tiles2.PNG" width="768" height="416"/>
+ </tileset>
+ <layer name="Tiles" width="25" height="15">
+  <data encoding="base64" compression="zlib">
+   eJyzZGBgsCKArQlgGzzYFogDgdibhjh01A6S7MiksR25o3aQZEcjje1oRbJjGxZMCzuQ5ehlBy5MLTuoGR8zgXgWEXg2DjyHAJ4LxADKxX48
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="25" height="15">
+  <object gid="2" x="96" y="384">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="3" x="128" y="384">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="4" x="160" y="384">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="6" x="96" y="416">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="7" x="128" y="416">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="8" x="160" y="416">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="10" x="96" y="448">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="11" x="128" y="448">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="12" x="160" y="448">
+   <properties>
+    <property name="name" value="ship"/>
+   </properties>
+  </object>
+  <object gid="9" x="32" y="288">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="13" x="192" y="448">
+   <properties>
+    <property name="name" value="lock"/>
+    <property name="pair" value="1"/>
+   </properties>
+  </object>
+  <object gid="13" x="256" y="448">
+   <properties>
+    <property name="name" value="lock"/>
+    <property name="pair" value="2"/>
+   </properties>
+  </object>
+  <object gid="13" x="320" y="448">
+   <properties>
+    <property name="name" value="lock"/>
+    <property name="pair" value="3"/>
+   </properties>
+  </object>
+  <object gid="13" x="384" y="448">
+   <properties>
+    <property name="name" value="lock"/>
+    <property name="pair" value="4"/>
+   </properties>
+  </object>
+  <object gid="14" x="32" y="64">
+   <properties>
+    <property name="name" value="key"/>
+    <property name="pair" value="1"/>
+   </properties>
+  </object>
+  <object gid="14" x="320" y="128">
+   <properties>
+    <property name="name" value="key"/>
+    <property name="pair" value="2"/>
+   </properties>
+  </object>
+  <object gid="14" x="576" y="192">
+   <properties>
+    <property name="name" value="key"/>
+    <property name="pair" value="3"/>
+   </properties>
+  </object>
+  <object gid="14" x="384" y="320">
+   <properties>
+    <property name="name" value="key"/>
+    <property name="pair" value="4"/>
+   </properties>
+  </object>
+  <object gid="9" x="32" y="128">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="128" y="64">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="288" y="64">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="384" y="128">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="544" y="128">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="576" y="256">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="448" y="288">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="384" y="384">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="352" y="448">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="224" y="448">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="192" y="224">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="640" y="384">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="704" y="96">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="544" y="448">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="288" y="352">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="320" y="224">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object gid="9" x="704" y="224">
+   <properties>
+    <property name="name" value="food"/>
+   </properties>
+  </object>
+  <object x="0" y="0" width="800" height="32">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="0" y="448" width="800" height="32">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="0" y="32" width="32" height="416">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="768" y="32" width="32" height="416">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="64" y="320" width="32" height="128">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="96" y="320" width="128" height="32">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="192" y="352" width="32" height="64">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+  <object x="224" y="384" width="192" height="32">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -38,7 +38,7 @@ class LevelSelectScreen(game: Game) : Screen(game) {
         table.add(createLabel("Level Select", font, Color.GOLD)).colspan(2).expandX().pad(5f)
         table.row()
 
-        val levels: Int = 2
+        val levels: Int = 3
         for (i in 0..(levels - 1)) {
             val play: TextButton = createButton("Level $i", font, up, down)
             play.addListener1 { e, a ->
