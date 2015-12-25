@@ -25,6 +25,12 @@ class Game() : AdvancedGame() {
                     it.borderColor = Color.BLACK
                     it.borderWidth = 2.5f
                     it.size = 64
+                })
+                .queue("UbuntuR-32", "ubuntur32", BitmapFont::class, FontLoaderParameter(astManager["UbuntuRGen"]) {
+                    it.color = Color.WHITE
+                    it.borderColor = Color.BLACK
+                    it.borderWidth = 1.25f
+                    it.size = 32
                 }).queue("Player", "mobs/Player.png", Texture::class).queue("Apple", "tiles/Apple.png", Texture::class)
                 .queue("Banana", "tiles/Banana.png", Texture::class)
                 .queue("Cherries", "tiles/Cherries.png", Texture::class)
@@ -32,7 +38,7 @@ class Game() : AdvancedGame() {
                 .queue("Watermelon", "tiles/Watermelon.png", Texture::class)
                 .queue("EnergyF", "GUI/EnergyFull.png", Texture::class)
                 .queue("EnergyE", "GUI/EnergyEmpty.png", Texture::class).queue("Key", "tiles/Key.png", Texture::class)
-                .queue("Lock", "tiles/Lock.png", Texture::class)
+                .queue("Lock", "tiles/Lock.png", Texture::class).queue("Planet", "GUI/Planet.png", Texture::class)
                 .load {
                     scrManager.add("Title", TitleScreen(this)).load("Title").add("LevelSelect", LevelSelectScreen(this))
                             .load("LevelSelect").add("Game", GameScreen(this)).load("Game").change("Title")

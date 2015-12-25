@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
@@ -15,6 +17,8 @@ import mati.advancedgdx.utils.createButton
 import mati.advancedgdx.utils.createLabel
 import mati.advancedgdx.utils.createNPD
 import mati.nave.Game
+import mati.nave.gui.PlanetButton
+import mati.nave.input.PlanetButtonInput
 import kotlin.properties.Delegates
 
 class LevelSelectScreen(game: Game) : Screen(game) {
@@ -29,25 +33,22 @@ class LevelSelectScreen(game: Game) : Screen(game) {
 
     override fun show() {
         stage = Stage(ScreenViewport())
-        val table: Table = Table()
-        stage.addActor(table)
-        table.setFillParent(true)
-        table.pad(10f)
-
         val font = game.astManager["UbuntuR-64", BitmapFont::class]
-        table.add(createLabel("Level Select", font, Color.GOLD)).colspan(2).expandX().pad(5f)
-        table.row()
+        val label: Label = createLabel("Level Select", font, Color.GOLD)
+        label.setPosition(stage.width / 2 - label.width / 2, stage.height - label.height - 10)
+        stage.addActor(label)
 
         val levels: Int = 3
         for (i in 0..(levels - 1)) {
-            val play: TextButton = createButton("Level $i", font, up, down)
-            play.addListener1 { e, a ->
+            val planet: PlanetButton = PlanetButton(game as Game, i, Color(MathUtils.random(), MathUtils.random(),
+                    MathUtils.random(), 1f)) {
                 (game.scrManager["Game"] as GameScreen).levelPath = "levels/l$i.tmx"
                 game.scrManager.change("Game")
             }
-            table.add(play).expandX().fill().pad(5f)
+            planet.setBounds(256f * i, stage.height / 2 - 128, 256f, 256f)
+            planet.addListener(PlanetButtonInput(planet))
+            stage.addActor(planet)
         }
-
         Gdx.input.inputProcessor = stage
     }
 
